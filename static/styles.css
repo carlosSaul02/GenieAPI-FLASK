@@ -1,0 +1,36 @@
+main {
+    margin: auto;
+    margin-top: 20px;
+
+}
+
+.container{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+.contenedor{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.contenedor > div {
+    margin: 10px; /* Espaciado entre cada botón */
+}
+
+.foot{
+    background-color: rgb(33, 37, 41);
+    color: white;
+    padding-top: 16px;
+}
+
+
+
+
+
+
+
