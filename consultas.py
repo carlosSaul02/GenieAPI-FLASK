@@ -87,6 +87,7 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
             print(f"Firmware: {firmware_dispositivo}") 
             print('\n')
 
+            hosts = {}
             print("*********************HOSTS********************************")
             for host_key, host_info in dispositivo['InternetGatewayDevice']['LANDevice']['1']['Hosts']['Host'].items():
                 if isinstance(host_info, dict):  # Verificar si es un diccionario válido
@@ -98,11 +99,16 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
                     print(f"   - IP: {host_ip}")
                     print(f"   - MAC: {host_mac}")
                     print('\n')
+                    # Guardar en el diccionario hosts
+                    hosts[host_key] = {
+                        'host_ip': host_ip,
+                        'host_mac': host_mac,
+                        'host_name': host_name
+                    }
                 else:
                     print("No hay más hosts.")
                     print('\n')
                     break
-
 
             #INFORMACION DE REPORTE
             print("*****************REPORTE CON GENIE************************")
@@ -117,7 +123,7 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
             
  
 
-            return info_dispositivo
+            return info_dispositivo, hosts
         else:
             print("No se encontró ningún dispositivo con ese SerialNumber.")
             return None
