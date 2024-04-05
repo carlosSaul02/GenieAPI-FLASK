@@ -6,13 +6,8 @@
     <link rel="shortcut ico" href="/static/img/modemrouter_102164.ico" />
     <title>TR069 - API GENIEACS</title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/aca491054d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
 
@@ -55,169 +50,98 @@
         <div id="mensajeAlerta"></div>
         <div class="card-body text-end">
           <br />
+
           <form id="tr069_form" class="row g-3" action="/guardar_cambios" method="POST">
-            <!--Importacion del token CSRF para seguridad del formulario-->
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
+            <!-- Importación del token CSRF para seguridad del formulario -->
+            {{form.csrf_token}}
+        
             <div class="row mb-3">
-              <label for="id_dispositivo" class="col-sm-2 col-form-label"
-                ><strong>ID:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="id_dispositivo"
-                  name="id_dispositivo"
-                  disabled
-                  value="{{info_dispositivo['id_dispositivo']}}"
-                />
-              </div>
+                {{ form.id_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.id_dispositivo(class="form-control", disabled=True, value=info_dispositivo['id_dispositivo']) }}
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label for="serial_dispositivo" class="col-sm-2 col-form-label"
-                ><strong>SN:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="serial_dispositivo"
-                  disabled
-                  value="{{info_dispositivo['serial_dispositivo']}}"
-                />
-              </div>
+                {{ form.serial_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.serial_dispositivo(class="form-control", disabled=True, value=info_dispositivo['serial_dispositivo']) }}
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label for="ssid_dispositivo" class="col-sm-2 col-form-label"
-                ><strong>SSID:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="ssid_dispositivo"
-                  name="ssid_dispositivo"
-                  value="{{info_dispositivo['ssid_dispositivo']}}"
-                  maxlength="30"
-                  minlength="5"
-                />
-              </div>
-              <div class="text-center" id="ssidError" style="color: red"></div>
+                {{ form.ssid_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.ssid_dispositivo(class="form-control", id="ssid_dispositivo", value=info_dispositivo['ssid_dispositivo']) }}
+                    <div class="text-center" id="ssidError" style="color: red"></div>
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label
-                for="contrasena_dispositivo"
-                class="col-sm-2 col-form-label"
-                ><strong>CONTRASEÑA:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="contrasena_dispositivo"
-                  name="contrasena_dispositivo"
-                  value="{{info_dispositivo['contrasena_dispositivo']}}"
-                  maxlength="64"
-                  minlength="8"
-                />
-              </div>
-              <div
-                class="text-center"
-                id="contrasenaError"
-                style="color: red"
-              ></div>
+                {{ form.contrasena_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.contrasena_dispositivo(class="form-control", id="contrasena_dispositivo", value=info_dispositivo['contrasena_dispositivo']) }}
+                    <div class="text-center" id="contrasenaError" style="color: red"></div>
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label for="ip_dispositivo" class="col-sm-2 col-form-label"
-                ><strong>IP:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="ip_dispositivo"
-                  disabled
-                  value="{{info_dispositivo['ip_dispositivo']}}"
-                />
-              </div>
+                {{ form.ip_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.ip_dispositivo(class="form-control", disabled=True, value=info_dispositivo['ip_dispositivo']) }}
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label for="mac_dispositivo" class="col-sm-2 col-form-label"
-                ><strong>MAC:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="mac_dispositivo"
-                  disabled
-                  value="{{info_dispositivo['mac_dispositivo']}}"
-                />
-              </div>
+                {{ form.mac_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.mac_dispositivo(class="form-control", disabled=True, value=info_dispositivo['mac_dispositivo']) }}
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label for="firmware_dispositivo" class="col-sm-2 col-form-label"
-                ><strong>FIRMWARE:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="firmware_dispositivo"
-                  disabled
-                  value="{{info_dispositivo['firmware_dispositivo']}}"
-                />
-              </div>
+                {{ form.firmware_dispositivo.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.firmware_dispositivo(class="form-control", disabled=True, value=info_dispositivo['firmware_dispositivo']) }}
+                </div>
             </div>
-
+        
             <div class="row mb-3">
-              <label for="last_boot" class="col-sm-2 col-form-label"
-                ><strong>LASTBOOT:</strong></label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="last_boot"
-                  disabled
-                  value="{{info_dispositivo['last_boot']}}"
-                />
-              </div>
+                {{ form.last_boot.label(class="col-sm-2 col-form-label", style="font-weight: bold") }}
+                <div class="col-sm-10">
+                    {{ form.last_boot(class="form-control", disabled=True, value=info_dispositivo['last_boot']) }}
+                </div>
             </div>
-          </form>
+            
+        </form>
+        
+          
         </div>
 
         <div class="card-footer contenedor">
           <div>
             <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal_hosts">
               <strong>Hosts</strong>
+              <i class="fa-solid fa-laptop"></i>
             </button>
           </div>
           <div>
             <button id="btn_refresh" class="btn btn-primary">
               <strong>Refresh</strong>
+              <i class="fa-solid fa-arrows-rotate"></i>
             </button>
           </div>
-          <div
-            id="deviceInfo"
-            data-device-id="{{info_dispositivo['id_dispositivo']}}"
-            style="display: none"
-          ></div>
+
           <div>
             <button id="btn_reiniciar" class="btn btn-danger">
               <strong>Reboot</strong>
+              <i class="fa-solid fa-power-off"></i>
             </button>
           </div>
           <div>
             <button id="btn_guardar" class="btn btn-success">
               <strong>Save</strong>
+              <i class="fa-sharp fa-regular fa-floppy-disk"></i>
             </button>
           </div>
         </div>
@@ -261,6 +185,8 @@
         </div>
       </div>
 
+      <!--Loader de carga para los botones-->
+      <div class="loader" id="loader"></div>
 
     </main>
   </body>

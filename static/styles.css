@@ -9,7 +9,6 @@ main {
     padding-right: 0px;
 }
 
-
 .contenedor{
     display: flex;
     flex-direction: row;
@@ -28,6 +27,36 @@ main {
     padding-top: 16px;
 }
 
+.loader {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente */
+    z-index: 9999; /* Asegura que esté por encima de todo */
+  }
+  
+  .loader::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border: 6px solid #ccc;
+    border-radius: 50%;
+    border-top-color: #333;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 
 

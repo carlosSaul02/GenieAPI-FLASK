@@ -1,4 +1,8 @@
 document.getElementById("btn_reiniciar").addEventListener("click", function () {
+  // Mostrar el loader
+  document.getElementById("loader").style.display = "block";
+
+
   var csrfToken = document.querySelector('input[name="csrf_token"]').value;
   // Realizar una solicitud POST al servidor Flask para reiniciar el dispositivo
   fetch("/reiniciar_dispositivo", {
@@ -13,14 +17,27 @@ document.getElementById("btn_reiniciar").addEventListener("click", function () {
     .then((data) => {
       console.log(data.message);
       alert(data.message); // Mostrar un mensaje de éxito
+
+      // Ocultar el loader después de recibir la respuesta exitosa
+      document.getElementById("loader").style.display = "none";
+
+      // Redirigir a la misma página después de recibir la respuesta exitosa
+      window.location.reload();
     })
     .catch((error) => {
       console.error("Error:", error);
       alert("Hubo un error al reiniciar el dispositivo."); // Mostrar un mensaje de error
+
+      // Ocultar el loader en caso de error también
+      document.getElementById("loader").style.display = "none";
     });
 });
 
 document.getElementById("btn_refresh").addEventListener("click", function () {
+
+  // Mostrar el loader
+  document.getElementById("loader").style.display = "block";
+
   // Obtener el token CSRF del formulario
   var csrfToken = document.querySelector('input[name="csrf_token"]').value;
   // Realizar una solicitud POST al servidor Flask para reiniciar el dispositivo
@@ -37,12 +54,18 @@ document.getElementById("btn_refresh").addEventListener("click", function () {
       console.log(data.message);
       alert(data.message); // Mostrar un mensaje de éxito
 
+      // Ocultar el loader después de recibir la respuesta exitosa
+      document.getElementById("loader").style.display = "none";
+
       // Redirigir a la misma página después de recibir la respuesta exitosa
       window.location.reload();
     })
     .catch((error) => {
       console.error("Error:", error);
       alert("Hubo un error al refrescar el dispositivo."); // Mostrar un mensaje de error
+
+      // Ocultar el loader en caso de error también
+      document.getElementById("loader").style.display = "none";
     });
 });
 
@@ -120,7 +143,8 @@ document.getElementById("btn_guardar").addEventListener("click", function () {
 
   // Obtener el formulario por su ID
   var form = document.getElementById("tr069_form");
-  alert("SSID y Contraseña aceptados.")
+  
   // Enviar el formulario cuando se haga clic en el botón
   form.submit();
+  alert("SSID y Contraseña aceptados.")
 });

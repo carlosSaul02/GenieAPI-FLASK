@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, redirect, render_template, request
 from flask_wtf.csrf import CSRFProtect
-from validaciones import validar_tag, validar_ssid, validar_contrasena
-from inserciones import insertar_tag, cambiar_contrasena_por_id, cambiar_ssid_por_id
+from validaciones import validar_ssid, validar_contrasena
+from inserciones import cambiar_contrasena_por_id, cambiar_ssid_por_id
 from consultas import obtener_id_por_serial_number, obtener_informacion_dispositivo, refrescar_dispositivo, reiniciar_dispositivo
-
+from forms import tr069_form
 
 app = Flask(__name__)
 app.secret_key="Enred2024."
@@ -14,11 +14,11 @@ serial_number = "000000"
 ip_servidor = "192.168.77.203"
 puerto_servidor = "7557"
 
+
 @app.route('/', methods=['POST','GET'])
 def index():
-    if request.method == 'POST':
-        print("hola")
-
+    form = tr069_form()
+    
     #************************** Obtener el ID del dispositivo usando el SerialNumber
     device_id = obtener_id_por_serial_number(serial_number, ip_servidor, puerto_servidor)
 
@@ -27,7 +27,7 @@ def index():
     info_dispositivo,hosts=obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor)
 
     
-    return render_template('index.html',info_dispositivo=info_dispositivo,hosts=hosts)
+    return render_template('index.html',info_dispositivo=info_dispositivo,hosts=hosts, form=form)
 
 @app.route('/reiniciar_dispositivo', methods=['POST'])
 def reiniciar_dispositivo_route():

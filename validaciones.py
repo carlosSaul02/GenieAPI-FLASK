@@ -30,19 +30,3 @@ def validar_ssid(ssid):
         return {"False": "El SSID debe tener un maximo de 30 caracteres."}
     
     return {"True": "SSID válido."}
-
-
-def validar_tag(tag):
-    # Verificar si el Tag tiene al menos 8 caracteres
-    if len(tag) < 4:
-        return {"False": "El Tag debe tener al menos 5 caracteres."}
-    
-    # Verificar si el Tag tiene un maximo de 30 caracteres
-    if len(tag) > 15:
-        return {"False": "El Tag debe tener un maximo de 15 caracteres."}
-    
-    # Verificar si el Tag tiene espacios en blanco
-    if ' ' in tag:
-        return {"False": "El Tag no puede contener espacios en blanco."}
-    
-    return {"True": "Tag válido."}
