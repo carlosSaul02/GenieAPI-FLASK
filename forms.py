@@ -18,5 +18,5 @@ class tr069_form(FlaskForm):
     ip_dispositivo = StringField('IP:', validators=[DataRequired()])
     mac_dispositivo = StringField('MAC:', validators=[DataRequired()])
     firmware_dispositivo = StringField('FIRMWARE:', validators=[DataRequired()])
-    last_boot = StringField('LASTBOOT:', validators=[DataRequired()])
+    last_inform = StringField('LAST INFORM:', validators=[DataRequired()])
     submit = SubmitField('Guardar Cambios')

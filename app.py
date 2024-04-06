@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, redirect, render_template, request
+from flask import Flask, jsonify, redirect, render_template, request, flash
 from flask_wtf.csrf import CSRFProtect
 from validaciones import validar_ssid, validar_contrasena
 from inserciones import cambiar_contrasena_por_id, cambiar_ssid_por_id
@@ -68,19 +68,28 @@ def guardar_cambios():
 
     if "True" in ssid_valida:
         print("El SSID es válido.")
-        cambiar_ssid_por_id(device_id, ssid_dispositivo, ip_servidor, puerto_servidor)
+        exito_ssid = cambiar_ssid_por_id(device_id, ssid_dispositivo, ip_servidor, puerto_servidor)
+        if "True" in exito_ssid:
+            flash("SSID cambiado exitosamente.", "success")
+        else:
+            flash("Error cambiando SSID.", "danger")    
 
     else:
         print("El SSID no es válido:", ssid_valida["False"])
-
+        flash("Error al cambiar SSID: " + ssid_valida["False"], "danger")
     
     #Validar y cambiar contrasena
     contrasena_valida = validar_contrasena(contrasena_dispositivo)
     if "True" in contrasena_valida:
         print("La contraseña es válida.")
-        cambiar_contrasena_por_id(device_id, contrasena_dispositivo, ip_servidor, puerto_servidor)
+        exito_contraseña = cambiar_contrasena_por_id(device_id, contrasena_dispositivo, ip_servidor, puerto_servidor)
+        if "True" in exito_contraseña:
+            flash("Contraseña cambiada exitosamente.", "success")
+        else:
+            flash("Error cambiando la contraseña.", "danger") 
     else:
         print("La contraseña no es valida:", contrasena_valida["False"])
+        flash("Error al cambiar CONTRASEÑA: " + contrasena_valida["False"], "danger")
      
     
     return redirect('/')

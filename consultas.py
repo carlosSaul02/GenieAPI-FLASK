@@ -49,56 +49,56 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
 
             # Tomar el primer dispositivo de la lista
             dispositivo = data[0]
-            print("****************INFORMACION DEL DISPOSITIVO***************")
+            #print("****************INFORMACION DEL DISPOSITIVO***************")
 
             #id del dispositivo
             id_dispositivo = dispositivo['_id']
             info_dispositivo['id_dispositivo']=id_dispositivo
-            print(f"ID: {id_dispositivo}")
+            #print(f"ID: {id_dispositivo}")
 
             #Serial number
             serial_dispositivo = dispositivo['_deviceId']['_SerialNumber']
             info_dispositivo['serial_dispositivo']=serial_dispositivo
-            print(f"Serial Number: {serial_dispositivo}")
+            #print(f"Serial Number: {serial_dispositivo}")
 
             # Retornar el SSID del dispositivo
             ssid_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['SSID']['_value'] 
             info_dispositivo['ssid_dispositivo']=ssid_dispositivo
-            print(f"SSID: {ssid_dispositivo}")  
+            #print(f"SSID: {ssid_dispositivo}")  
 
             # Retornar la contrasena del dispositivo
             contrasena_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['PreSharedKey']['1']['PreSharedKey']['_value']
             info_dispositivo['contrasena_dispositivo']=contrasena_dispositivo
-            print(f"Contrasena: {contrasena_dispositivo}")  
+            #print(f"Contrasena: {contrasena_dispositivo}")  
             
             # Retornar la IP del dispositivo
             ip_dispositivo = dispositivo['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice']['1']['WANIPConnection']['1']['ExternalIPAddress']['_value']
             info_dispositivo['ip_dispositivo']=ip_dispositivo
-            print(f"IP: {ip_dispositivo}") 
+            #print(f"IP: {ip_dispositivo}") 
 
             # Retornar la MAC del dispositivo
             mac_dispositivo = dispositivo['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice']['1']['WANIPConnection']['1']['MACAddress']['_value'] 
             info_dispositivo['mac_dispositivo']=mac_dispositivo
-            print(f"MAC: {mac_dispositivo}") 
+            #print(f"MAC: {mac_dispositivo}") 
 
             # La version de firmware
             firmware_dispositivo = dispositivo['InternetGatewayDevice']['DeviceInfo']['SoftwareVersion']['_value']
             info_dispositivo['firmware_dispositivo']=firmware_dispositivo
-            print(f"Firmware: {firmware_dispositivo}") 
-            print('\n')
+            #print(f"Firmware: {firmware_dispositivo}") 
+            #print('\n')
 
             hosts = {}
-            print("*********************HOSTS********************************")
+            #print("*********************HOSTS********************************")
             for host_key, host_info in dispositivo['InternetGatewayDevice']['LANDevice']['1']['Hosts']['Host'].items():
                 if isinstance(host_info, dict):  # Verificar si es un diccionario válido
                     host_ip = host_info['IPAddress']['_value']
                     host_mac = host_info['MACAddress']['_value']
                     host_name = host_info['HostName']['_value'] if host_info['HostName']['_value'] else "Desconocido"
-                    print(f"Host {host_key}:")
-                    print(f"   - Nombre: {host_name}")
-                    print(f"   - IP: {host_ip}")
-                    print(f"   - MAC: {host_mac}")
-                    print('\n')
+                    #print(f"Host {host_key}:")
+                    #print(f"   - Nombre: {host_name}")
+                    #print(f"   - IP: {host_ip}")
+                    #print(f"   - MAC: {host_mac}")
+                    #print('\n')
                     # Guardar en el diccionario hosts
                     hosts[host_key] = {
                         'host_ip': host_ip,
@@ -106,19 +106,19 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
                         'host_name': host_name
                     }
                 else:
-                    print("No hay más hosts.")
-                    print('\n')
+                    #print("No hay más hosts.")
+                    #print('\n')
                     break
 
             #INFORMACION DE REPORTE
-            print("*****************REPORTE CON GENIE************************")
-            print(f"Intervalo de reporte con el servidor: {dispositivo['InternetGatewayDevice']['ManagementServer']['PeriodicInformInterval']['_value']}s") # Retornar el PeriodicInformInterval del dispositivo
+            #print("*****************REPORTE CON GENIE************************")
+            #print(f"Intervalo de reporte con el servidor: {dispositivo['InternetGatewayDevice']['ManagementServer']['PeriodicInformInterval']['_value']}s") # Retornar el PeriodicInformInterval del dispositivo
             
             #Agregar formato a _lastBoot
-            #last_boot_string = dispositivo['_lastBoot']
-            #last_boot_datetime = datetime.datetime.strptime(last_boot_string, "%Y-%m-%dT%H:%M:%S.%fZ")
-            #last_boot = last_boot_datetime.strftime("%Y-%m-%d %H:%M:%S")
-            #info_dispositivo['last_boot']=last_boot
+            last_boot_string = dispositivo['_lastInform']
+            last_boot_datetime = datetime.datetime.strptime(last_boot_string, "%Y-%m-%dT%H:%M:%S.%fZ")
+            last_boot = last_boot_datetime.strftime("%Y-%m-%d %H:%M:%S")
+            info_dispositivo['_lastBoot']=last_boot
             #print(f"Ultimo Inicio: {last_boot}") #ultimo inicio
             
  

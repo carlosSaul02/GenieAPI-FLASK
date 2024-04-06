@@ -17,13 +17,15 @@ def cambiar_ssid_por_id(device_id, ssid, ip_servidor, puerto_servidor):
         response = requests.post(url, json=data)     
         if response.status_code == 200:
             print("SSID cambiado exitosamente.")
+            return {"True": "SSID cambiado exitosamente."}
         else:
             print(f"Error al intentar cambiar SSID. Código de estado: {response.status_code}")
-            return None
+            return {"False": "Error al intentar cambiar SSID."}
 
 
     except requests.exceptions.RequestException as e:
         print(f"Error al hacer la solicitud para cambiar el SSID: {e}")
+        return {"False": "Error al intentar cambiar SSID."}
 
 
 def cambiar_contrasena_por_id(device_id, contrasena, ip_servidor, puerto_servidor):
@@ -43,12 +45,14 @@ def cambiar_contrasena_por_id(device_id, contrasena, ip_servidor, puerto_servido
         response = requests.post(url, json=data)
         if response.status_code == 200:
             print("Contraseña cambiada exitosamente.")
+            return {"True": "Contraseña cambiada exitosamente."}
         else:
             print(f"Error al cambiar contraseña. Código de estado: {response.status_code}")
-            return None
+            return {"False": "Error al intentar cambiar la contraseña."}
 
     except requests.exceptions.RequestException as e:
         print(f"Error al hacer la solicitud para cambiar la contraseña: {e}")
+        return {"False": "Error al intentar cambiar la contraseña."}
 
 
 def insertar_tag(device_id, ip_servidor, puerto_servidor, tag):

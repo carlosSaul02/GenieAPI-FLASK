@@ -1,7 +1,7 @@
+// CODIGO PARA ENVIAR METODO POST DEL BOTON DE REFRESH
 document.getElementById("btn_reiniciar").addEventListener("click", function () {
   // Mostrar el loader
   document.getElementById("loader").style.display = "block";
-
 
   var csrfToken = document.querySelector('input[name="csrf_token"]').value;
   // Realizar una solicitud POST al servidor Flask para reiniciar el dispositivo
@@ -9,7 +9,7 @@ document.getElementById("btn_reiniciar").addEventListener("click", function () {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": csrfToken  // Incluir el token CSRF en los headers 
+      "X-CSRFToken": csrfToken, // Incluir el token CSRF en los headers
     },
     body: JSON.stringify({}),
   })
@@ -33,8 +33,8 @@ document.getElementById("btn_reiniciar").addEventListener("click", function () {
     });
 });
 
+// CODIGO PARA ENVIAR METODO POST DEL BOTON DE REFRESH
 document.getElementById("btn_refresh").addEventListener("click", function () {
-
   // Mostrar el loader
   document.getElementById("loader").style.display = "block";
 
@@ -45,7 +45,7 @@ document.getElementById("btn_refresh").addEventListener("click", function () {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": csrfToken  // Incluir el token CSRF en los headers 
+      "X-CSRFToken": csrfToken, // Incluir el token CSRF en los headers
     },
     body: JSON.stringify({}),
   })
@@ -69,41 +69,47 @@ document.getElementById("btn_refresh").addEventListener("click", function () {
     });
 });
 
+// Función para validar el SSID en tiempo real
+document
+  .getElementById("ssid_dispositivo")
+  .addEventListener("input", function () {
+    var ssid = this.value;
+    var ssidError = document.getElementById("ssidError");
 
-
- // Función para validar el SSID en tiempo real
- document.getElementById("ssid_dispositivo").addEventListener("input", function () {
-  var ssid = this.value;
-  var ssidError = document.getElementById("ssidError");
-
-  if (ssid.length < 5) {
+    if (ssid.length < 5) {
       ssidError.innerText = "El SSID debe tener al menos 5 caracteres.";
-  } else if (ssid.length > 30) {
+    } else if (ssid.length > 30) {
       ssidError.innerText = "El SSID debe tener un máximo de 30 caracteres.";
-  } else {
+    } else {
       ssidError.innerText = ""; // Limpiar mensaje de error si es válido
-  }
-});
+    }
+  });
 
 // Función para validar la contraseña en tiempo real
-document.getElementById("contrasena_dispositivo").addEventListener("input", function () {
-  var contrasena = this.value;
-  var contrasenaError = document.getElementById("contrasenaError");
+document
+  .getElementById("contrasena_dispositivo")
+  .addEventListener("input", function () {
+    var contrasena = this.value;
+    var contrasenaError = document.getElementById("contrasenaError");
 
-  if (contrasena.length < 8) {
-      contrasenaError.innerText = "La contraseña debe tener al menos 8 caracteres.";
-  } else if (contrasena.length > 64) {
-      contrasenaError.innerText = "La contraseña debe tener un máximo de 64 caracteres.";
-  } else if (contrasena.includes(" ")) {
-      contrasenaError.innerText = "La contraseña no puede contener espacios en blanco.";
-  } else if (!/^[a-zA-Z0-9]*$/.test(contrasena)) {
-      contrasenaError.innerText = "La contraseña no puede contener caracteres especiales.";
-  } else {
+    if (contrasena.length < 8) {
+      contrasenaError.innerText =
+        "La contraseña debe tener al menos 8 caracteres.";
+    } else if (contrasena.length > 64) {
+      contrasenaError.innerText =
+        "La contraseña debe tener un máximo de 64 caracteres.";
+    } else if (contrasena.includes(" ")) {
+      contrasenaError.innerText =
+        "La contraseña no puede contener espacios en blanco.";
+    } else if (!/^[a-zA-Z0-9]*$/.test(contrasena)) {
+      contrasenaError.innerText =
+        "La contraseña no puede contener caracteres especiales.";
+    } else {
       contrasenaError.innerText = ""; // Limpiar mensaje de error si es válido
-  }
-});
+    }
+  });
 
-
+// CODIGO PARA ENVIAR POR METODO POST EL FORMULARIO A TRAVES DEL BOTON DE GUARDAR
 document.getElementById("btn_guardar").addEventListener("click", function () {
   // Validar SSID
   var ssid = document.getElementById("ssid_dispositivo").value;
@@ -118,7 +124,7 @@ document.getElementById("btn_guardar").addEventListener("click", function () {
   } else {
     document.getElementById("ssidError").innerText = ""; // Limpiar mensaje de error
   }
-  
+
   // Validar contraseña
   var contrasena = document.getElementById("contrasena_dispositivo").value;
   if (contrasena.length < 8) {
@@ -143,8 +149,42 @@ document.getElementById("btn_guardar").addEventListener("click", function () {
 
   // Obtener el formulario por su ID
   var form = document.getElementById("tr069_form");
-  
+
+  // Mostrar el loader
+  document.getElementById("loader").style.display = "block";
+
   // Enviar el formulario cuando se haga clic en el botón
   form.submit();
-  alert("SSID y Contraseña aceptados.")
+});
+
+// CODIGO PARA HABILITAR O DESHABILITAR VER CONTRASEÑA
+const togglePassword = document.getElementById("togglePassword");
+const passwordField = document.getElementById("contrasena_dispositivo");
+
+togglePassword.addEventListener("click", function () {
+  const fieldType = passwordField.getAttribute("type");
+  if (fieldType === "password") {
+    passwordField.setAttribute("type", "text");
+    togglePassword.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+  } else {
+    passwordField.setAttribute("type", "password");
+    togglePassword.innerHTML = '<i class="fa-solid fa-eye"></i>';
+  }
+});
+
+// CODIGO PARA HABILITAR EL BOTON SAVE CUANDO HAY UN CAMBIO EN SSID O CONTRASEÑA
+const ssidInput = document.getElementById("ssid_dispositivo");
+const contrasenaInput = document.getElementById("contrasena_dispositivo");
+const guardarBtn = document.getElementById("btn_guardar");
+
+ssidInput.addEventListener("input", function () {
+  ssidInput.disabled = false;
+  ssidInput.focus();
+  guardarBtn.disabled = false;
+});
+
+contrasenaInput.addEventListener("input", function () {
+  contrasenaInput.disabled = false;
+  contrasenaInput.focus();
+  guardarBtn.disabled = false;
 });
