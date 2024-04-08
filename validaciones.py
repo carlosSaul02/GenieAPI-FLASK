@@ -14,8 +14,8 @@ def validar_contrasena(contrasena):
         return {"False": "La contraseña no puede contener espacios en blanco."}
     
     # Verificar si la contraseña tiene caracteres especiales
-    if not re.match("^[a-zA-Z0-9]*$", contrasena):
-        return {"False": "La contraseña no puede contener caracteres especiales."}
+    if not re.match("^[a-zA-Z0-9_]*$", contrasena):
+        return {"False": "La contraseña solo puede contener letras, números y guion bajo(_)."}
     
     return {"True": "Contraseña válida."}
 

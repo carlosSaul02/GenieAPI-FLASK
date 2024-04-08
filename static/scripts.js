@@ -101,7 +101,7 @@ document
     } else if (contrasena.includes(" ")) {
       contrasenaError.innerText =
         "La contraseña no puede contener espacios en blanco.";
-    } else if (!/^[a-zA-Z0-9]*$/.test(contrasena)) {
+    } else if (!/^[a-zA-Z0-9_]*$/.test(contrasena)) {
       contrasenaError.innerText =
         "La contraseña no puede contener caracteres especiales.";
     } else {
@@ -139,7 +139,7 @@ document.getElementById("btn_guardar").addEventListener("click", function () {
     document.getElementById("contrasenaError").innerText =
       "La contraseña no puede contener espacios en blanco.";
     return false; // Evitar que el formulario se envíe
-  } else if (!/^[a-zA-Z0-9]*$/.test(contrasena)) {
+  } else if (!/^[a-zA-Z0-9_]*$/.test(contrasena)) {
     document.getElementById("contrasenaError").innerText =
       "La contraseña no puede contener caracteres especiales.";
     return false; // Evitar que el formulario se envíe
