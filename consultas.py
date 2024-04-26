@@ -54,38 +54,41 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
             #id del dispositivo
             id_dispositivo = dispositivo['_id']
             info_dispositivo['id_dispositivo']=id_dispositivo
-            #print(f"ID: {id_dispositivo}")
+            print(f"ID: {id_dispositivo}")
 
             #Serial number
             serial_dispositivo = dispositivo['_deviceId']['_SerialNumber']
             info_dispositivo['serial_dispositivo']=serial_dispositivo
-            #print(f"Serial Number: {serial_dispositivo}")
+            print(f"Serial Number: {serial_dispositivo}")
 
             # Retornar el SSID del dispositivo
             ssid_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['SSID']['_value'] 
             info_dispositivo['ssid_dispositivo']=ssid_dispositivo
-            #print(f"SSID: {ssid_dispositivo}")  
-
-            # Retornar la contrasena del dispositivo
-            contrasena_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['PreSharedKey']['1']['PreSharedKey']['_value']
-            info_dispositivo['contrasena_dispositivo']=contrasena_dispositivo
-            #print(f"Contrasena: {contrasena_dispositivo}")  
+            print(f"SSID: {ssid_dispositivo}")  
+            
+            try:
+                # Retornar la contrasena del dispositivo
+                contrasena_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['PreSharedKey']['1']['PreSharedKey']['_value']
+                info_dispositivo['contrasena_dispositivo']=contrasena_dispositivo
+                print(f"Contrasena: {contrasena_dispositivo}")  
+            except (requests.exceptions.RequestException, KeyError) as e:
+                print(f"Error al consultar la contraseña: {e}")
             
             # Retornar la IP del dispositivo
             ip_dispositivo = dispositivo['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice']['1']['WANIPConnection']['1']['ExternalIPAddress']['_value']
             info_dispositivo['ip_dispositivo']=ip_dispositivo
-            #print(f"IP: {ip_dispositivo}") 
+            print(f"IP: {ip_dispositivo}") 
 
             # Retornar la MAC del dispositivo
             mac_dispositivo = dispositivo['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice']['1']['WANIPConnection']['1']['MACAddress']['_value'] 
             info_dispositivo['mac_dispositivo']=mac_dispositivo
-            #print(f"MAC: {mac_dispositivo}") 
+            print(f"MAC: {mac_dispositivo}") 
 
             # La version de firmware
             firmware_dispositivo = dispositivo['InternetGatewayDevice']['DeviceInfo']['SoftwareVersion']['_value']
             info_dispositivo['firmware_dispositivo']=firmware_dispositivo
-            #print(f"Firmware: {firmware_dispositivo}") 
-            #print('\n')
+            print(f"Firmware: {firmware_dispositivo}") 
+            print('\n')
 
             hosts = {}
             #print("*********************HOSTS********************************")
@@ -119,7 +122,7 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
             last_boot_datetime = datetime.datetime.strptime(last_boot_string, "%Y-%m-%dT%H:%M:%S.%fZ")
             last_boot = last_boot_datetime.strftime("%Y-%m-%d %H:%M:%S")
             info_dispositivo['_lastBoot']=last_boot
-            #print(f"Ultimo Inicio: {last_boot}") #ultimo inicio
+            print(f"Ultimo Inicio: {last_boot}") #ultimo inicio
             
  
 
