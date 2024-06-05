@@ -68,11 +68,12 @@ def obtener_informacion_dispositivo(device_id, ip_servidor, puerto_servidor):
             
             try:
                 # Retornar la contrasena del dispositivo
-                contrasena_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['PreSharedKey']['1']['PreSharedKey']['_value']
+                contrasena_dispositivo = dispositivo['InternetGatewayDevice']['LANDevice']['1']['WLANConfiguration']['1']['KeyPassphrase']['_value']
                 info_dispositivo['contrasena_dispositivo']=contrasena_dispositivo
                 print(f"Contrasena: {contrasena_dispositivo}")  
             except (requests.exceptions.RequestException, KeyError) as e:
                 print(f"Error al consultar la contraseña: {e}")
+                info_dispositivo['contrasena_dispositivo']=""
             
             # Retornar la IP del dispositivo
             ip_dispositivo = dispositivo['InternetGatewayDevice']['WANDevice']['1']['WANConnectionDevice']['1']['WANIPConnection']['1']['ExternalIPAddress']['_value']

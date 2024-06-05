@@ -12,7 +12,7 @@ csrf = CSRFProtect(app)
 #Aqui hay que buscar la manera de llenar el serial_number con el que se quiere mostrar, devolverlo desde la vista o algo.
 #Con estos datos trabaja todo el programa
 serial_number = "000000"
-ip_servidor = "10.170.177.66"
+ip_servidor = "192.168.1.100"
 puerto_servidor = "7557"
 
 

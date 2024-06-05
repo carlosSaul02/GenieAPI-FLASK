@@ -36,7 +36,7 @@ def cambiar_contrasena_por_id(device_id, contrasena, ip_servidor, puerto_servido
     data = {
         "name": "setParameterValues",
         "parameterValues": [
-            ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.PreSharedKey", contrasena, "xsd:string"]
+            ["InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.KeyPassphrase", contrasena, "xsd:string"]
         ]
     }
 
